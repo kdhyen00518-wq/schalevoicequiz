@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BA VOICE QUIZ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 1. 모드 선택 화면 -->
+    <div id="mode-screen" class="screen grid-bg active">
+        <header class="top-header">
+            <div>
+                <div class="subtitle">BA VOICE QUIZ</div>
+                <div class="sub-subtitle">블루 아카이브 성우 반전 퀴즈</div>
+            </div>
+        </header>
+        <div class="content-center">
+            <h1 class="screen-title">모드 선택</h1>
+            <div class="mode-grid">
+                <button class="mode-btn" data-mode="input">
+                    <div class="mode-icon-box">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238FB6FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'></path><path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z'></path></svg>" alt="입력">
+                    </div>
+                    <span>직접 입력하기</span>
+                </button>
+                <button class="mode-btn" data-mode="choice">
+                    <div class="mode-icon-box">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238FB6FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='7' height='7'></rect><rect x='14' y='3' width='7' height='7'></rect><rect x='14' y='14' width='7' height='7'></rect><rect x='3' y='14' width='7' height='7'></rect></svg>" alt="4지선다">
+                    </div>
+                    <span>4지선다</span>
+                </button>
+                <button class="mode-btn" data-mode="card">
+                    <div class="mode-icon-box">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238FB6FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='18' height='18' rx='2' ry='2'></rect><line x1='3' y1='9' x2='21' y2='9'></line><line x1='9' y1='21' x2='9' y2='9'></line></svg>" alt="카드 뒤집기">
+                    </div>
+                    <span>카드 뒤집기</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. 문제 수 / 설정 화면 -->
+    <div id="config-screen" class="screen grid-bg">
+        <header class="top-header">
+            <div>
+                <div class="subtitle">BA VOICE QUIZ</div>
+                <div class="sub-subtitle">블루 아카이브 성우 반전 퀴즈</div>
+            </div>
+        </header>
+        <div class="content-center">
+            <div class="config-box">
+                <h2 id="config-title" class="config-title">설정</h2>
+                <p id="config-desc" class="config-desc">문제 수를 선택하세요</p>
+                <div id="config-options" class="config-options">
+                    <!-- JS로 동적 생성됨 (5문제, 10문제, 전체 등) -->
+                </div>
+                <button id="start-btn" class="start-btn">시작하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. 일반 퀴즈 화면 (직접 입력 / 4지선다 공통) -->
+    <div id="quiz-screen" class="screen solid-bg">
+        <div class="quiz-container">
+            <header class="quiz-header">
+                <div class="quiz-header-left">
+                    <div class="subtitle">BLUE ARCHIVE</div>
+                    <div class="main-title">학생 성우 반전 퀴즈</div>
+                </div>
+                <div class="quiz-header-right">
+                    <button id="return-btn" class="return-btn">포기하고 돌아가기</button>
+                    <div class="status-box">
+                        <div class="status-label">PROGRESS</div>
+                        <div class="status-value progress-text">1 / 5</div>
+                        <div class="status-score">SCORE : <span class="score-text">0</span></div>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="quiz-question-box">
+                <div class="watermark-q">Q.</div>
+                <div class="question-text">다음 학생과 성우가 같은 학생은?</div>
+                <div class="question-content" id="question-content">
+                    <!-- 대상 학생 이미지 컨테이너 -->
+                </div>
+            </div>
+
+            <!-- 직접 입력 컨트롤 -->
+            <div id="input-controls" class="quiz-controls">
+                <input type="text" id="answer-input" class="answer-input" placeholder="학생 이름 입력 (예: 시로코)" autocomplete="off">
+                <div class="button-group">
+                    <button id="submit-btn" class="action-btn submit">정답 제출</button>
+                    <button id="skip-btn" class="action-btn skip">스킵</button>
+                </div>
+            </div>
+
+            <!-- 4지선다 컨트롤 -->
+            <div id="choice-controls" class="quiz-controls" style="display: none;">
+                <div class="choice-grid" id="choice-grid">
+                    <!-- JS로 버튼 4개 생성 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. 정답 확인 화면 -->
+    <div id="result-screen" class="screen solid-bg">
+        <div class="quiz-container result-container">
+            <h2 id="result-message" class="result-message">정답입니다!</h2>
+            <div id="result-layout" class="result-layout">
+                <!-- 2명 나란히 또는 3명 정삼각형 배치 -->
+            </div>
+            <div class="cv-text" id="result-cv">CV. 성우이름</div>
+            <button id="next-btn" class="action-btn submit next-btn">다음 문제로</button>
+        </div>
+    </div>
+
+    <!-- 5. 카드 뒤집기 화면 -->
+    <div id="card-screen" class="screen solid-bg">
+        <div class="quiz-container">
+            <header class="quiz-header">
+                <div class="quiz-header-left">
+                    <div class="subtitle">BLUE ARCHIVE</div>
+                    <div class="main-title">카드 뒤집기 (성우 짝맞추기)</div>
+                </div>
+                <div class="quiz-header-right">
+                    <button id="card-return-btn" class="return-btn">포기하고 돌아가기</button>
+                    <div class="status-box">
+                        <div class="status-label">MATCHES</div>
+                        <div class="status-value"><span id="card-match-text">0</span> / <span id="card-total-text">0</span></div>
+                    </div>
+                </div>
+            </header>
+            <div id="card-grid" class="card-grid">
+                <!-- JS로 카드 생성 -->
+            </div>
+        </div>
+    </div>
+
+<!-- 6. 최종 퀴즈 결과 화면 -->
+    <div id="final-result-screen" class="screen grid-bg">
+        <header class="top-header">
+            <div>
+                <div class="subtitle">BA VOICE QUIZ</div>
+                <div class="sub-subtitle">블루 아카이브 성우 반전 퀴즈</div>
+            </div>
+        </header>
+        <div class="content-center">
+            <div class="config-box">
+                <!-- 아이콘이 들어갈 자리 추가 -->
+                <div id="final-mode-icon" class="final-mode-icon"></div>
+                
+                <h2 class="config-title">퀴즈 종료!</h2>
+                <div class="final-score-box">
+                    <div class="final-score-label">최종 점수</div>
+                    <div class="final-score-value"><span id="final-score">0</span> / <span id="final-total">0</span></div>
+                    <div class="final-score-percent" id="final-percent">정답률 : 0%</div>
+                </div>
+                <button id="final-return-btn" class="start-btn ready" style="margin-top: 20px;">메인 화면으로</button>
+            </div>
+        </div>
+    </div>
+
+<script src="students.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
