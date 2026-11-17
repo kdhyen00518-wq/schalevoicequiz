@@ -569,10 +569,11 @@ body {
         font-size: 1.1rem;
     }
 
-    /* 2. 설정 창 및 전체 컨테이너 여백/너비 최적화 */
+/* 설정 창 및 결과 창 넓이 강제 확보 */
     .config-box {
-        width: 90%;
-        padding: 25px 15px;
+        width: 90% !important; 
+        max-width: 400px;
+        padding: 30px 15px !important;
     }
     .quiz-container {
         width: 94%;
@@ -631,8 +632,13 @@ body {
         padding: 2px 0;
     }
     
-    /* 6. 최종 결과창 폰트 축소 */
+/* 점수 텍스트 줄바꿈 방지 및 크기 조정 */
     .final-score-value {
         font-size: 2.8rem;
+        white-space: nowrap; /* '4 / 10'이 두 줄로 나뉘는 현상 방지 */
+    }
+    .final-score-percent {
+        font-size: 1.1rem;
+        white-space: nowrap; /* '정답률 : 40%'가 두 줄로 나뉘는 현상 방지 */
     }
 }
